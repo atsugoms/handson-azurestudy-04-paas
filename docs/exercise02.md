@@ -4,8 +4,8 @@
 
 ![](images/ex02-0000-sqldb.png)
 
-1. SQL Database 作成
-1. 仮想マシンからのアクセス許可設定
+1. [SQL Database 作成](#sql-database-作成)
+1. [仮想マシンからのアクセス許可設定](#仮想マシンからのアクセス許可設定)
 
 
 ## SQL Database 作成
