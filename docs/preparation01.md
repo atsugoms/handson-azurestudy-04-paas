@@ -50,7 +50,8 @@
 1. [操作]-[実行コマンド] を開く
 1. `RunPowerShellScript` を選択して、以下のコマンドを貼り付け、「実行」
 
-        cd ~/Downloads
+        New-Item -Force -Path $env:HOMEDRIVE\temp -ItemType Directory
+        cd $env:HOMEDRIVE\temp
 
         # Visual Studio Code
         Invoke-WebRequest -Uri https://az764295.vo.msecnd.net/stable/74b1f979648cc44d385a2286793c226e611f59e7/VSCodeSetup-x64-1.71.2.exe -OutFile VSCodeSetup.exe
@@ -71,5 +72,8 @@
         ./dotnet-install.ps1 -Architecture x64 -Channel 6.0
 
         # SQL Server Management Studio
-        Invoke-WebRequest -Uri https://aka.ms/ssmsfullsetup -OutFile SSMS-test.exe
-        ./SSMS.exe /install /quiet /norestart
+        Invoke-WebRequest -Uri https://aka.ms/ssmsfullsetup -OutFile ssmsfullsetup.exe
+        ./ssmsfullsetup.exe /install /quiet /norestart /passive
+
+        # 再起動
+        Restart-Computer -Force
