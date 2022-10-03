@@ -11,7 +11,7 @@
 ### ハンズオン
 
 1. [AppService作成](exercise01.md)
-1. SQL Database 作成
+1. [SQL Database 作成](exercise02.md)
 1. App Service から SQL DB へ接続
 1. SQL Datbase のスキーマ生成
 1. App Service にデプロイ/動作確認
