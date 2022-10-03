@@ -4,7 +4,6 @@
 
 ![](images/ex01-0000-appsvc.png)
 
-
 1. [App Service の作成](#app-service-の作成)
 1. [App Service の動作確認](#app-service-の動作確認)
 
@@ -56,3 +55,30 @@
 
     ![](images/ex01-0103-appsvc.png)
 
+
+## デプロイスロットの作成
+
+1. 作成した App Service へ移動
+
+1. [デプロイメント]-[デプロイスロット]を開く
+
+    ![](images/ex01-0301-appsvc.png)
+
+1. 「スロットの追加」を選択してスロットを追加
+
+    * 名前： (任意)
+    * 次から設定を複製： `設定を複製しない`
+
+    ![](images/ex01-0302-appsvc.png)
+
+1. 作成されたデプロイスロットを選択
+
+    ![](images/ex01-0303-appsvc.png)
+
+1. 作成したスロットのURLを確認して、別ブラウザで開く
+
+    ![](images/ex01-0304-appsvc.png)
+
+1. 初期ページが開けばOK
+
+    ![](images/ex01-0305-appsvc.png)
