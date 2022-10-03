@@ -2,64 +2,161 @@
     "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "virtualMachines_vm_handson_winsvr_name": {
-            "defaultValue": "vm-handson-winsvr",
-            "type": "String"
-        },
-        "virtualNetworks_vnet_handson_main_name": {
+        "VirtualNetrowk_Name": {
             "defaultValue": "vnet-handson-main",
             "type": "String"
         },
-        "networkSecurityGroups_nsg_handson_db_name": {
-            "defaultValue": "nsg-handson-db",
-            "type": "String"
-        },
-        "networkSecurityGroups_nsg_handson_vm_name": {
+        "NSG_Vm_Name": {
             "defaultValue": "nsg-handson-vm",
             "type": "String"
         },
-        "networkInterfaces_vm_handson_winsvr564_name": {
-            "defaultValue": "vm-handson-winsvr564",
-            "type": "String"
-        },
-        "publicIPAddresses_vm_handson_winsvr_ip_name": {
-            "defaultValue": "vm-handson-winsvr-ip",
-            "type": "String"
-        },
-        "networkSecurityGroups_nsg_handson_appsvc_name": {
+        "NSG_AppSvc_Name": {
             "defaultValue": "nsg-handson-appsvc",
             "type": "String"
         },
-        "schedules_shutdown_computevm_vm_handson_winsvr_name": {
-            "defaultValue": "shutdown-computevm-vm-handson-winsvr",
+        "NSG_Db_Name": {
+            "defaultValue": "nsg-handson-db",
+            "type": "String"
+        },
+        "VirtualMachine_Name": {
+            "defaultValue": "vm-handson-winsvr",
+            "type": "String"
+        },
+        "VirtualMachine_AdminUsername": {
+            "defaultValue": "azureuser",
+            "type": "string"
+        },
+        "VirtualMachine_AdminPassword": {
+            "type": "securestring"
+        },
+        "VirtualMachine_NIC_Name": {
+            "defaultValue": "nic-handson-winsvr",
+            "type": "String"
+        },
+        "VirtualMachine_PublicIP_Name": {
+            "defaultValue": "ip-handson-winsvr",
             "type": "String"
         }
     },
     "variables": {},
     "resources": [
         {
-            "type": "Microsoft.Network/networkSecurityGroups",
+            "type": "Microsoft.Network/virtualNetworks",
             "apiVersion": "2020-11-01",
-            "name": "[parameters('networkSecurityGroups_nsg_handson_appsvc_name')]",
-            "location": "japaneast",
+            "name": "[parameters('VirtualNetrowk_Name')]",
+            "location": "[resourceGroup().location]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('NSG_Vm_Name'))]",
+                "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('NSG_AppSvc_Name'))]",
+                "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('NSG_Db_Name'))]"
+            ],
             "properties": {
-                "securityRules": []
+                "addressSpace": {
+                    "addressPrefixes": [
+                        "10.0.0.0/16"
+                    ]
+                },
+                "subnets": [
+                    {
+                        "name": "snet-vm",
+                        "properties": {
+                            "addressPrefix": "10.0.0.0/24",
+                            "networkSecurityGroup": {
+                                "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('NSG_Vm_Name'))]"
+                            },
+                            "delegations": [],
+                            "privateEndpointNetworkPolicies": "Disabled",
+                            "privateLinkServiceNetworkPolicies": "Enabled"
+                        }
+                    },
+                    {
+                        "name": "snet-appsvc",
+                        "properties": {
+                            "addressPrefix": "10.0.1.0/24",
+                            "networkSecurityGroup": {
+                                "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('NSG_AppSvc_Name'))]"
+                            },
+                            "delegations": [],
+                            "privateEndpointNetworkPolicies": "Disabled",
+                            "privateLinkServiceNetworkPolicies": "Enabled"
+                        }
+                    },
+                    {
+                        "name": "snet-db",
+                        "properties": {
+                            "addressPrefix": "10.0.2.0/24",
+                            "networkSecurityGroup": {
+                                "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('NSG_Db_Name'))]"
+                            },
+                            "delegations": [],
+                            "privateEndpointNetworkPolicies": "Disabled",
+                            "privateLinkServiceNetworkPolicies": "Enabled"
+                        }
+                    }
+                ],
+                "virtualNetworkPeerings": [],
+                "enableDdosProtection": false
+            }
+        },
+        {
+            "type": "Microsoft.Network/virtualNetworks/subnets",
+            "apiVersion": "2020-11-01",
+            "name": "[concat(parameters('VirtualNetrowk_Name'), '/snet-vm')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/virtualNetworks', parameters('VirtualNetrowk_Name'))]",
+                "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('NSG_Vm_Name'))]"
+            ],
+            "properties": {
+                "addressPrefix": "10.0.0.0/24",
+                "networkSecurityGroup": {
+                    "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('NSG_Vm_Name'))]"
+                },
+                "delegations": [],
+                "privateEndpointNetworkPolicies": "Disabled",
+                "privateLinkServiceNetworkPolicies": "Enabled"
+            }
+        },
+        {
+            "type": "Microsoft.Network/virtualNetworks/subnets",
+            "apiVersion": "2020-11-01",
+            "name": "[concat(parameters('VirtualNetrowk_Name'), '/snet-appsvc')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/virtualNetworks', parameters('VirtualNetrowk_Name'))]",
+                "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('NSG_AppSvc_Name'))]"
+            ],
+            "properties": {
+                "addressPrefix": "10.0.1.0/24",
+                "networkSecurityGroup": {
+                    "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('NSG_AppSvc_Name'))]"
+                },
+                "delegations": [],
+                "privateEndpointNetworkPolicies": "Disabled",
+                "privateLinkServiceNetworkPolicies": "Enabled"
+            }
+        },
+        {
+            "type": "Microsoft.Network/virtualNetworks/subnets",
+            "apiVersion": "2020-11-01",
+            "name": "[concat(parameters('VirtualNetrowk_Name'), '/snet-db')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/virtualNetworks', parameters('VirtualNetrowk_Name'))]",
+                "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('NSG_Db_Name'))]"
+            ],
+            "properties": {
+                "addressPrefix": "10.0.2.0/24",
+                "networkSecurityGroup": {
+                    "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('NSG_Db_Name'))]"
+                },
+                "delegations": [],
+                "privateEndpointNetworkPolicies": "Disabled",
+                "privateLinkServiceNetworkPolicies": "Enabled"
             }
         },
         {
             "type": "Microsoft.Network/networkSecurityGroups",
             "apiVersion": "2020-11-01",
-            "name": "[parameters('networkSecurityGroups_nsg_handson_db_name')]",
-            "location": "japaneast",
-            "properties": {
-                "securityRules": []
-            }
-        },
-        {
-            "type": "Microsoft.Network/networkSecurityGroups",
-            "apiVersion": "2020-11-01",
-            "name": "[parameters('networkSecurityGroups_nsg_handson_vm_name')]",
-            "location": "japaneast",
+            "name": "[parameters('NSG_Vm_Name')]",
+            "location": "[resourceGroup().location]",
             "properties": {
                 "securityRules": [
                     {
@@ -83,112 +180,11 @@
             }
         },
         {
-            "type": "Microsoft.Network/publicIPAddresses",
-            "apiVersion": "2020-11-01",
-            "name": "[parameters('publicIPAddresses_vm_handson_winsvr_ip_name')]",
-            "location": "japaneast",
-            "sku": {
-                "name": "Standard",
-                "tier": "Regional"
-            },
-            "properties": {
-                "ipAddress": "20.48.117.132",
-                "publicIPAddressVersion": "IPv4",
-                "publicIPAllocationMethod": "Static",
-                "idleTimeoutInMinutes": 4,
-                "ipTags": []
-            }
-        },
-        {
-            "type": "Microsoft.Compute/virtualMachines",
-            "apiVersion": "2022-03-01",
-            "name": "[parameters('virtualMachines_vm_handson_winsvr_name')]",
-            "location": "japaneast",
-            "dependsOn": [
-                "[resourceId('Microsoft.Network/networkInterfaces', parameters('networkInterfaces_vm_handson_winsvr564_name'))]"
-            ],
-            "properties": {
-                "hardwareProfile": {
-                    "vmSize": "Standard_B2s"
-                },
-                "storageProfile": {
-                    "imageReference": {
-                        "publisher": "MicrosoftWindowsServer",
-                        "offer": "WindowsServer",
-                        "sku": "2022-datacenter-azure-edition",
-                        "version": "latest"
-                    },
-                    "osDisk": {
-                        "osType": "Windows",
-                        "name": "[concat(parameters('virtualMachines_vm_handson_winsvr_name'), '_disk1_997de4b50ab7424cbd3d2a70bdc571df')]",
-                        "createOption": "FromImage",
-                        "caching": "ReadWrite",
-                        "managedDisk": {
-                            "storageAccountType": "StandardSSD_LRS",
-                            "id": "[resourceId('Microsoft.Compute/disks', concat(parameters('virtualMachines_vm_handson_winsvr_name'), '_disk1_997de4b50ab7424cbd3d2a70bdc571df'))]"
-                        },
-                        "deleteOption": "Delete",
-                        "diskSizeGB": 127
-                    },
-                    "dataDisks": []
-                },
-                "osProfile": {
-                    "computerName": "vm-handson-wins",
-                    "adminUsername": "azureuser",
-                    "windowsConfiguration": {
-                        "provisionVMAgent": true,
-                        "enableAutomaticUpdates": true,
-                        "patchSettings": {
-                            "patchMode": "AutomaticByOS",
-                            "assessmentMode": "ImageDefault",
-                            "enableHotpatching": false
-                        }
-                    },
-                    "secrets": [],
-                    "allowExtensionOperations": true,
-                    "requireGuestProvisionSignal": true
-                },
-                "networkProfile": {
-                    "networkInterfaces": [
-                        {
-                            "id": "[resourceId('Microsoft.Network/networkInterfaces', parameters('networkInterfaces_vm_handson_winsvr564_name'))]",
-                            "properties": {
-                                "deleteOption": "Delete"
-                            }
-                        }
-                    ]
-                }
-            }
-        },
-        {
-            "type": "microsoft.devtestlab/schedules",
-            "apiVersion": "2018-09-15",
-            "name": "[parameters('schedules_shutdown_computevm_vm_handson_winsvr_name')]",
-            "location": "japaneast",
-            "dependsOn": [
-                "[resourceId('Microsoft.Compute/virtualMachines', parameters('virtualMachines_vm_handson_winsvr_name'))]"
-            ],
-            "properties": {
-                "status": "Enabled",
-                "taskType": "ComputeVmShutdownTask",
-                "dailyRecurrence": {
-                    "time": "1900"
-                },
-                "timeZoneId": "UTC",
-                "notificationSettings": {
-                    "status": "Disabled",
-                    "timeInMinutes": 30,
-                    "notificationLocale": "ja"
-                },
-                "targetResourceId": "[resourceId('Microsoft.Compute/virtualMachines', parameters('virtualMachines_vm_handson_winsvr_name'))]"
-            }
-        },
-        {
             "type": "Microsoft.Network/networkSecurityGroups/securityRules",
             "apiVersion": "2020-11-01",
-            "name": "[concat(parameters('networkSecurityGroups_nsg_handson_vm_name'), '/AllowAnyRDPInbound')]",
+            "name": "[concat(parameters('NSG_Vm_Name'), '/AllowAnyRDPInbound')]",
             "dependsOn": [
-                "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_nsg_handson_vm_name'))]"
+                "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('NSG_Vm_Name'))]"
             ],
             "properties": {
                 "protocol": "TCP",
@@ -206,13 +202,114 @@
             }
         },
         {
+            "type": "Microsoft.Network/networkSecurityGroups",
+            "apiVersion": "2020-11-01",
+            "name": "[parameters('NSG_AppSvc_Name')]",
+            "location": "[resourceGroup().location]",
+            "properties": {
+                "securityRules": []
+            }
+        },
+        {
+            "type": "Microsoft.Network/networkSecurityGroups",
+            "apiVersion": "2020-11-01",
+            "name": "[parameters('NSG_Db_Name')]",
+            "location": "[resourceGroup().location]",
+            "properties": {
+                "securityRules": []
+            }
+        },
+        {
+            "type": "Microsoft.Compute/virtualMachines",
+            "apiVersion": "2022-03-01",
+            "name": "[parameters('VirtualMachine_Name')]",
+            "location": "[resourceGroup().location]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/networkInterfaces', parameters('VirtualMachine_NIC_Name'))]"
+            ],
+            "properties": {
+                "hardwareProfile": {
+                    "vmSize": "Standard_B2s"
+                },
+                "storageProfile": {
+                    "imageReference": {
+                        "publisher": "MicrosoftWindowsServer",
+                        "offer": "WindowsServer",
+                        "sku": "2022-datacenter-azure-edition",
+                        "version": "latest"
+                    },
+                    "osDisk": {
+                        "osType": "Windows",
+                        "name": "[concat(parameters('VirtualMachine_Name'), '_disk1_997de4b50ab7424cbd3d2a70bdc571df')]",
+                        "createOption": "FromImage",
+                        "caching": "ReadWrite",
+                        "managedDisk": {
+                            "storageAccountType": "StandardSSD_LRS"
+                        },
+                        "deleteOption": "Delete",
+                        "diskSizeGB": 127
+                    },
+                    "dataDisks": []
+                },
+                "osProfile": {
+                    "computerName": "vm-handson-wins",
+                    "adminUsername": "[parameters('VirtualMachine_AdminUsername')]",
+                    "adminPassword": "[parameters('VirtualMachine_AdminPassword')]",
+                    "windowsConfiguration": {
+                        "provisionVMAgent": true,
+                        "enableAutomaticUpdates": true,
+                        "patchSettings": {
+                            "patchMode": "AutomaticByOS",
+                            "assessmentMode": "ImageDefault",
+                            "enableHotpatching": false
+                        }
+                    },
+                    "secrets": [],
+                    "allowExtensionOperations": true
+                },
+                "networkProfile": {
+                    "networkInterfaces": [
+                        {
+                            "id": "[resourceId('Microsoft.Network/networkInterfaces', parameters('VirtualMachine_NIC_Name'))]",
+                            "properties": {
+                                "deleteOption": "Delete"
+                            }
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "type": "microsoft.devtestlab/schedules",
+            "apiVersion": "2018-09-15",
+            "name": "[concat('shutdown-computevm-', parameters('VirtualMachine_Name'))]",
+            "location": "[resourceGroup().location]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Compute/virtualMachines', parameters('VirtualMachine_Name'))]"
+            ],
+            "properties": {
+                "status": "Enabled",
+                "taskType": "ComputeVmShutdownTask",
+                "dailyRecurrence": {
+                    "time": "1900"
+                },
+                "timeZoneId": "UTC",
+                "notificationSettings": {
+                    "status": "Disabled",
+                    "timeInMinutes": 30,
+                    "notificationLocale": "ja"
+                },
+                "targetResourceId": "[resourceId('Microsoft.Compute/virtualMachines', parameters('VirtualMachine_Name'))]"
+            }
+        },
+        {
             "type": "Microsoft.Network/networkInterfaces",
             "apiVersion": "2020-11-01",
-            "name": "[parameters('networkInterfaces_vm_handson_winsvr564_name')]",
-            "location": "japaneast",
+            "name": "[parameters('VirtualMachine_NIC_Name')]",
+            "location": "[resourceGroup().location]",
             "dependsOn": [
-                "[resourceId('Microsoft.Network/publicIPAddresses', parameters('publicIPAddresses_vm_handson_winsvr_ip_name'))]",
-                "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworks_vnet_handson_main_name'), 'snet-vm')]"
+                "[resourceId('Microsoft.Network/publicIPAddresses', parameters('VirtualMachine_PublicIP_Name'))]",
+                "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('VirtualNetrowk_Name'), 'snet-vm')]"
             ],
             "properties": {
                 "ipConfigurations": [
@@ -222,10 +319,10 @@
                             "privateIPAddress": "10.0.0.4",
                             "privateIPAllocationMethod": "Dynamic",
                             "publicIPAddress": {
-                                "id": "[resourceId('Microsoft.Network/publicIPAddresses', parameters('publicIPAddresses_vm_handson_winsvr_ip_name'))]"
+                                "id": "[resourceId('Microsoft.Network/publicIPAddresses', parameters('VirtualMachine_PublicIP_Name'))]"
                             },
                             "subnet": {
-                                "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworks_vnet_handson_main_name'), 'snet-vm')]"
+                                "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('VirtualNetrowk_Name'), 'snet-vm')]"
                             },
                             "primary": true,
                             "privateIPAddressVersion": "IPv4"
@@ -240,115 +337,20 @@
             }
         },
         {
-            "type": "Microsoft.Network/virtualNetworks/subnets",
+            "type": "Microsoft.Network/publicIPAddresses",
             "apiVersion": "2020-11-01",
-            "name": "[concat(parameters('virtualNetworks_vnet_handson_main_name'), '/snet-appsvc')]",
-            "dependsOn": [
-                "[resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworks_vnet_handson_main_name'))]",
-                "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_nsg_handson_appsvc_name'))]"
-            ],
+            "name": "[parameters('VirtualMachine_PublicIP_Name')]",
+            "location": "[resourceGroup().location]",
+            "sku": {
+                "name": "Standard",
+                "tier": "Regional"
+            },
             "properties": {
-                "addressPrefix": "10.0.1.0/24",
-                "networkSecurityGroup": {
-                    "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_nsg_handson_appsvc_name'))]"
-                },
-                "delegations": [],
-                "privateEndpointNetworkPolicies": "Disabled",
-                "privateLinkServiceNetworkPolicies": "Enabled"
-            }
-        },
-        {
-            "type": "Microsoft.Network/virtualNetworks/subnets",
-            "apiVersion": "2020-11-01",
-            "name": "[concat(parameters('virtualNetworks_vnet_handson_main_name'), '/snet-db')]",
-            "dependsOn": [
-                "[resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworks_vnet_handson_main_name'))]",
-                "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_nsg_handson_db_name'))]"
-            ],
-            "properties": {
-                "addressPrefix": "10.0.2.0/24",
-                "networkSecurityGroup": {
-                    "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_nsg_handson_db_name'))]"
-                },
-                "delegations": [],
-                "privateEndpointNetworkPolicies": "Disabled",
-                "privateLinkServiceNetworkPolicies": "Enabled"
-            }
-        },
-        {
-            "type": "Microsoft.Network/virtualNetworks/subnets",
-            "apiVersion": "2020-11-01",
-            "name": "[concat(parameters('virtualNetworks_vnet_handson_main_name'), '/snet-vm')]",
-            "dependsOn": [
-                "[resourceId('Microsoft.Network/virtualNetworks', parameters('virtualNetworks_vnet_handson_main_name'))]",
-                "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_nsg_handson_vm_name'))]"
-            ],
-            "properties": {
-                "addressPrefix": "10.0.0.0/24",
-                "networkSecurityGroup": {
-                    "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_nsg_handson_vm_name'))]"
-                },
-                "delegations": [],
-                "privateEndpointNetworkPolicies": "Disabled",
-                "privateLinkServiceNetworkPolicies": "Enabled"
-            }
-        },
-        {
-            "type": "Microsoft.Network/virtualNetworks",
-            "apiVersion": "2020-11-01",
-            "name": "[parameters('virtualNetworks_vnet_handson_main_name')]",
-            "location": "japaneast",
-            "dependsOn": [
-                "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_nsg_handson_vm_name'))]",
-                "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_nsg_handson_appsvc_name'))]",
-                "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_nsg_handson_db_name'))]"
-            ],
-            "properties": {
-                "addressSpace": {
-                    "addressPrefixes": [
-                        "10.0.0.0/16"
-                    ]
-                },
-                "subnets": [
-                    {
-                        "name": "snet-vm",
-                        "properties": {
-                            "addressPrefix": "10.0.0.0/24",
-                            "networkSecurityGroup": {
-                                "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_nsg_handson_vm_name'))]"
-                            },
-                            "delegations": [],
-                            "privateEndpointNetworkPolicies": "Disabled",
-                            "privateLinkServiceNetworkPolicies": "Enabled"
-                        }
-                    },
-                    {
-                        "name": "snet-appsvc",
-                        "properties": {
-                            "addressPrefix": "10.0.1.0/24",
-                            "networkSecurityGroup": {
-                                "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_nsg_handson_appsvc_name'))]"
-                            },
-                            "delegations": [],
-                            "privateEndpointNetworkPolicies": "Disabled",
-                            "privateLinkServiceNetworkPolicies": "Enabled"
-                        }
-                    },
-                    {
-                        "name": "snet-db",
-                        "properties": {
-                            "addressPrefix": "10.0.2.0/24",
-                            "networkSecurityGroup": {
-                                "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroups_nsg_handson_db_name'))]"
-                            },
-                            "delegations": [],
-                            "privateEndpointNetworkPolicies": "Disabled",
-                            "privateLinkServiceNetworkPolicies": "Enabled"
-                        }
-                    }
-                ],
-                "virtualNetworkPeerings": [],
-                "enableDdosProtection": false
+                "ipAddress": "20.48.117.132",
+                "publicIPAddressVersion": "IPv4",
+                "publicIPAllocationMethod": "Static",
+                "idleTimeoutInMinutes": 4,
+                "ipTags": []
             }
         }
     ]
