@@ -6,6 +6,7 @@
 
 1. [App Service の作成](#app-service-の作成)
 1. [App Service の動作確認](#app-service-の動作確認)
+1. [デプロイスロットの作成](#デプロイスロットの作成)
 
 
 ## App Service の作成
