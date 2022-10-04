@@ -1,4 +1,4 @@
-# Exercise3: SQL Database のスキーマ生成
+# Exercise4: App Service へアプリのデプロイ
 
 ## 【目次】
 
