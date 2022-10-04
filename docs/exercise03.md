@@ -8,7 +8,7 @@
 1. [SQL Database への接続文字列取得](#sql-database-への接続文字列取得)
 1. [SQL Database への接続設定](#sql-database-への接続設定)
 1. [SQL Database の初期化](#sql-database-の初期化)
-
+1. [SQL Database のスキーマ確認]
 
 ## SQL Database への接続文字列取得
 
@@ -60,6 +60,23 @@
     実行結果イメージ
 
     ![](images/ex03-0103-schema.png)
+
+
+## SQL Database のスキーマ確認
+
+(*) Azureポータル上で実施
+
+1. Azure ポータルへ入って作成済みの SQL Database を開く
+
+1. [クエリエディター] を開く
+
+1. 「SQL Server 認証」 を使ってログイン
+
+    ![](images/ex03-0401-schema.png)
+
+1. [テーブル]-[db.Todo]を開き、スキーマが登録されていることを確認
+
+    ![](images/ex03-0402-schema.png)
 
 
 
