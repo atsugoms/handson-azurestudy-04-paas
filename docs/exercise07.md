@@ -4,10 +4,10 @@
 
 ![](images/ex07-0000-closed.png)
 
-1. SQL Database の 閉域化
-1. SQL Database へ接続できないことの確認
-1. App Service の閉域化
-1. App Service の動作確認
+1. [SQL Database の 閉域化](#sql-database-の-閉域化)
+1. [SQL Database へ接続できないことの確認](#sql-database-へ接続できないことの確認)
+1. [App Service の閉域化](#app-service-の閉域化)
+1. [App Service の動作確認](#app-service-の動作確認)
 
 
 ## SQL Database の 閉域化
