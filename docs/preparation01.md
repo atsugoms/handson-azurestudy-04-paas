@@ -5,8 +5,9 @@
 ![](images/ex01-0000-appsvc.png)
 
 
-1. インフラの展開
-1. Windows Server の設定
+1. [インフラの展開](#インフラの展開)
+1. [Windows Server の設定](#windows-server-の設定)
+1. [リポジトリのクローン](#リポジトリのクローン)
 
 
 ## インフラの展開
