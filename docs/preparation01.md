@@ -27,7 +27,7 @@
 
     以下の拡張機能をインストール
 
-    * [日本語化（任意）](https://marketplace.visualstudio.com/items?itemName=MS-CEINTL.vscode-language-pack-ja)
+    <!-- * [日本語化（任意）](https://marketplace.visualstudio.com/items?itemName=MS-CEINTL.vscode-language-pack-ja) -->
     * [Azure App Service](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-azureappservice)
     * [C#](https://marketplace.visualstudio.com/items?itemName=ms-dotnettools.csharp)
 
@@ -39,7 +39,7 @@
 
     https://dotnet.microsoft.com/en-us/download/dotnet/6.0
 
-1. SQL Server Management Studio インストール
+1. SQL Server Management Studio インストール (任意)
 
     https://learn.microsoft.com/ja-jp/sql/ssms/download-sql-server-management-studio-ssms?view=sql-server-ver16
 
