@@ -15,5 +15,6 @@
 1. [SQL Datbase のスキーマ生成](exercise03.md)
 1. [App Service へアプリのデプロイ](exercise04.md)
 1. [App Service スロットの活用](exercise05.md)
-1. ログ出力設定 / ログ確認
+1. [ストリームログの設定 / 確認（オプション）](exercise06.md)
 1. 閉域化
+1. 環境削除
