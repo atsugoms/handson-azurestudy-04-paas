@@ -2,7 +2,7 @@
 
 ## 【目次】
 
-![](images/ex01-0000-appsvc.png)
+![](images/prep01-0000-network.png)
 
 
 1. [インフラの展開](#インフラの展開)
