@@ -16,5 +16,5 @@
 1. [App Service へアプリのデプロイ](exercise04.md)
 1. [App Service スロットの活用](exercise05.md)
 1. [ストリームログの設定 / 確認（オプション）](exercise06.md)
-1. 閉域化
+1. [閉域化（オプション）](exercise07.md)
 1. 環境削除
