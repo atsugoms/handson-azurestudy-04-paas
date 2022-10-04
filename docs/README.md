@@ -12,8 +12,8 @@
 
 1. [AppService作成](exercise01.md)
 1. [SQL Database 作成](exercise02.md)
-1. App Service から SQL DB へ接続
-1. SQL Datbase のスキーマ生成
+1. [SQL Datbase のスキーマ生成](exercise03.md)
+1. App Service へアプリのデプロイ
 1. App Service にデプロイ/動作確認
 1. ログ出力設定 / ログ確認
 1. 閉域化

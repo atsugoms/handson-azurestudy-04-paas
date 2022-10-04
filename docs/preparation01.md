@@ -77,3 +77,15 @@
 
         # 再起動
         Restart-Computer -Force
+
+## リポジトリのクローン
+
+1. 以下のリポジトリを `C:\work` 以下にクローンしておく
+
+    (*) Git Bash を利用
+
+        mkdir -p ${HOMEDRIVE}/work
+        cd ${HOMEDRIVE}/work
+        git clone https://github.com/Azure-Samples/msdocs-app-service-sqldb-dotnetcore.git
+        cd msdocs-app-service-sqldb-dotnetcore
+
