@@ -8,7 +8,7 @@
 1. [SQL Database への接続文字列取得](#sql-database-への接続文字列取得)
 1. [SQL Database への接続設定](#sql-database-への接続設定)
 1. [SQL Database の初期化](#sql-database-の初期化)
-1. [SQL Database のスキーマ確認]
+1. [SQL Database のスキーマ確認](#sql-database-のスキーマ確認)
 
 ## SQL Database への接続文字列取得
 
