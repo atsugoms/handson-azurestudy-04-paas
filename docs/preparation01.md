@@ -16,72 +16,128 @@
 
    [![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fakinaritsugo%2Fhandson-azurestudy-04-paas%2Fmain%2Finfra%2Ftemplate.json)
 
+    テンプレート設定のポイント
+
+    * サブスクリプション： (ハンズオンで利用するもの)
+    * リソースグループ： (任意。同一サブスクリプション共用する場合、重複しないよう注意)
+    * リージョン： `Japan East`
+    * Virtual Machine Admin Username： (任意。VMのログインID)
+    * Virtual Machine Admin Password： (任意。VMのログインパスワード)
 
 
 ## Windows Server の設定
 
 1. RDP 接続
 
-1. Visual Studio Code インストール
+    1. Azureポータルにて、起動済みの仮想マシンを開く
 
-    https://code.visualstudio.com/Download
+    1. [概要]-[パブリックIPアドレス]を確認
 
-    以下の拡張機能をインストール
+        ![](images/prep01-0101-network.png)
 
-    <!-- * [日本語化（任意）](https://marketplace.visualstudio.com/items?itemName=MS-CEINTL.vscode-language-pack-ja) -->
-    * [Azure App Service](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-azureappservice)
-    * [C#](https://marketplace.visualstudio.com/items?itemName=ms-dotnettools.csharp)
+    1. RDPを起動して接続
 
-1. Git インストール
+        接続できない場合、仮想マシンが所属するサブネットのセキュリティグループ `nsg-handson-vm` を確認
 
-    https://git-scm.com/downloads
+        必要に応じて RDP ( `TCP 3389` ) の受信ができるように設定する
 
-1. .NET 6 SDK インストール
+1. 仮想マシンに以下を順番にインストール
 
-    https://dotnet.microsoft.com/en-us/download/dotnet/6.0
+    * Visual Studio Code および 拡張機能
+    * Git
+    * .Net 6.0 SDK
+    * SQL Server Management Studio (任意)
 
-1. SQL Server Management Studio インストール (任意)
+    インストーラーは以下の通り
 
-    https://learn.microsoft.com/ja-jp/sql/ssms/download-sql-server-management-studio-ssms?view=sql-server-ver16
+    1. Visual Studio Code インストール
 
+        https://code.visualstudio.com/Download
 
+        以下の拡張機能をインストール
+
+        <!-- * [日本語化（任意）](https://marketplace.visualstudio.com/items?itemName=MS-CEINTL.vscode-language-pack-ja) -->
+        * [Azure App Service](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-azureappservice)
+        * [C#](https://marketplace.visualstudio.com/items?itemName=ms-dotnettools.csharp)
+
+    1. Git インストール
+
+        https://git-scm.com/downloads
+
+    1. .NET 6 SDK インストール
+
+        https://dotnet.microsoft.com/en-us/download/dotnet/6.0
+
+    1. SQL Server Management Studio インストール (任意)
+
+        https://learn.microsoft.com/ja-jp/sql/ssms/download-sql-server-management-studio-ssms?view=sql-server-ver16
+
+<!-- 
 (*) 以下の PowerShell スクリプトを「実行コマンド」から実行するとすべてインストールされる
 
 1. 仮想マシンを開く
 1. [操作]-[実行コマンド] を開く
 1. `RunPowerShellScript` を選択して、以下のコマンドを貼り付け、「実行」
 
-        New-Item -Force -Path $env:HOMEDRIVE\temp -ItemType Directory
-        cd $env:HOMEDRIVE\temp
+    コマンド実行を利用する場合、タイムアウトするので順番に実行する。
 
-        # Visual Studio Code
-        Invoke-WebRequest -Uri https://az764295.vo.msecnd.net/stable/74b1f979648cc44d385a2286793c226e611f59e7/VSCodeSetup-x64-1.71.2.exe -OutFile VSCodeSetup.exe
-        ./VSCodeSetup.exe /VERYSILENT /NORESTART /MERGETASKS=!runcode
+    1. Visual Studio Code インストール
 
-        # Visual Studio Code - Extension
-        $env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User")
-        code --force --install-extension MS-CEINTL.vscode-language-pack-ja
-        code --force --install-extension ms-azuretools.vscode-azureappservice
-        code --force --install-extension ms-dotnettools.csharp
+            New-Item -Force -Path $env:HOMEDRIVE\temp -ItemType Directory
+            cd $env:HOMEDRIVE\temp
 
-        # Git
-        Invoke-WebRequest -Uri https://github.com/git-for-windows/git/releases/download/v2.37.3.windows.1/Git-2.37.3-64-bit.exe -OutFile Git.exe
-        ./Git.exe /VERYSILENT /NORESTART
+            # Visual Studio Code
+            Invoke-WebRequest -Uri https://az764295.vo.msecnd.net/stable/74b1f979648cc44d385a2286793c226e611f59e7/VSCodeSetup-x64-1.71.2.exe -OutFile VSCodeSetup.exe
+            ./VSCodeSetup.exe /VERYSILENT /NORESTART /MERGETASKS=!runcode
 
-        # .Net 6 SDK
-        Invoke-WebRequest -Uri https://dotnet.microsoft.com/download/dotnet/scripts/v1/dotnet-install.ps1 -OutFile dotnet-install.ps1
-        ./dotnet-install.ps1 -Architecture x64 -Channel 6.0
+    1. Visual Studio Code 拡張機能 インストール
 
-        # SQL Server Management Studio
-        Invoke-WebRequest -Uri https://aka.ms/ssmsfullsetup -OutFile ssmsfullsetup.exe
-        ./ssmsfullsetup.exe /install /quiet /norestart /passive
+            # Visual Studio Code - Extension
+            $env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User")
+            code --force --install-extension MS-CEINTL.vscode-language-pack-ja
+            code --force --install-extension ms-azuretools.vscode-azureappservice
+            code --force --install-extension ms-dotnettools.csharp
+
+    1. Git インストール
+
+            New-Item -Force -Path $env:HOMEDRIVE\temp -ItemType Directory
+            cd $env:HOMEDRIVE\temp
+
+            # Git
+            Invoke-WebRequest -Uri https://github.com/git-for-windows/git/releases/download/v2.37.3.windows.1/Git-2.37.3-64-bit.exe -OutFile Git.exe
+            ./Git.exe /VERYSILENT /NORESTART
+
+    1. .Net 6 SDK インストール
+
+            New-Item -Force -Path $env:HOMEDRIVE\temp -ItemType Directory
+            cd $env:HOMEDRIVE\temp
+
+            # .Net 6 SDK
+            Invoke-WebRequest -Uri https://dotnet.microsoft.com/download/dotnet/scripts/v1/dotnet-install.ps1 -OutFile dotnet-install.ps1
+            ./dotnet-install.ps1 -Architecture x64 -Channel 6.0
+
+    1. SQL Server Management Studio インストール
+
+            New-Item -Force -Path $env:HOMEDRIVE\temp -ItemType Directory
+            cd $env:HOMEDRIVE\temp
+
+            # SQL Server Management Studio
+            Invoke-WebRequest -Uri https://aka.ms/ssmsfullsetup -OutFile ssmsfullsetup.exe
+            ./ssmsfullsetup.exe /install /quiet /norestart /passive
+
+    1. すべて完了したら再起動する
 
         # 再起動
         Restart-Computer -Force
+-->
 
 ## リポジトリのクローン
 
 1. 以下のリポジトリを `C:\work` 以下にクローンしておく
+
+    ```
+    https://github.com/Azure-Samples/msdocs-app-service-sqldb-dotnetcore.git
+    ```
 
     (*) Git Bash を利用
 
