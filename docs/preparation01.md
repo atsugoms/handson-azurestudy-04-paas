@@ -16,6 +16,8 @@
 
    [![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fakinaritsugo%2Fhandson-azurestudy-04-paas%2Fmain%2Finfra%2Ftemplate.json)
 
+    テンプレート設定のポイント
+
     * サブスクリプション： (ハンズオンで利用するもの)
     * リソースグループ： (任意。同一サブスクリプション共用する場合、重複しないよう注意)
     * リージョン： `Japan East`
