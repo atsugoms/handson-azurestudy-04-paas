@@ -85,3 +85,8 @@
 
    ![](images/ex04-0206-deploy.png)
 
+
+# 次の Exercise へ
+
+* [App Service スロットの活用](exercise05.md)
+

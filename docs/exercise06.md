@@ -41,3 +41,7 @@
 
     ![](images/ex06-0202-log.png)
 
+
+# 次の Exercise へ
+
+* [閉域化（オプション）](exercise07.md)

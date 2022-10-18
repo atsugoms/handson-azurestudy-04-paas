@@ -143,5 +143,8 @@
         ![](images/ex05-0506-slot.png)
 
 
+# 次の Exercise へ
+
+* [ストリームログの設定 / 確認（オプション）](exercise06.md)
 
 

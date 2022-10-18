@@ -87,3 +87,7 @@
 
     ![](images/ex02-0203-sqldb.png)
 
+
+# 次の Exercise へ
+
+* [SQL Datbase のスキーマ生成](exercise03.md)
