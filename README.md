@@ -26,7 +26,7 @@
 
 ## ハンズオン資料
 
-<!-- 1. [環境準備](/docs/preparation/01-arm.md) -->
+1. [環境準備](/docs/preparation01.md)
 1. [ハンズオン](/docs/README.md)
 
 
