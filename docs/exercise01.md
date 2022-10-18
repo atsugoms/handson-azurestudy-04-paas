@@ -83,3 +83,8 @@
 1. 初期ページが開けばOK
 
     ![](images/ex01-0305-appsvc.png)
+
+
+# 次の Exercise へ
+
+* [SQL Database 作成](exercise02.md)

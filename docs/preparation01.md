@@ -54,23 +54,51 @@
 
         https://code.visualstudio.com/Download
 
+        ダウンロードするインストーラー
+
+          * `Windows 8, 10, 11 用`
+          * `System Installer 64bit`
+
+          ![](images/prep01-0102-network.png)
+
         以下の拡張機能をインストール
 
         <!-- * [日本語化（任意）](https://marketplace.visualstudio.com/items?itemName=MS-CEINTL.vscode-language-pack-ja) -->
         * [Azure App Service](https://marketplace.visualstudio.com/items?itemName=ms-azuretools.vscode-azureappservice)
+
+            ![](images/prep01-0103-network.png)
+
         * [C#](https://marketplace.visualstudio.com/items?itemName=ms-dotnettools.csharp)
+
+            ![](images/prep01-0104-network.png)
+
 
     1. Git インストール
 
-        https://git-scm.com/downloads
+        https://git-scm.com/download/win
+
+        ダウンロードするインストーラー
+
+          * `SDK 6.0.402 Windows x64`
+
+            ![](images/prep01-0105-network.png)
+
 
     1. .NET 6 SDK インストール
 
         https://dotnet.microsoft.com/en-us/download/dotnet/6.0
 
+        ダウンロードするインストーラー
+
+          * `64-bit Git for Windows Setup`
+
+            ![](images/prep01-0106-network.png)
+
     1. SQL Server Management Studio インストール (任意)
 
         https://learn.microsoft.com/ja-jp/sql/ssms/download-sql-server-management-studio-ssms?view=sql-server-ver16
+
+        ![](images/prep01-0107-network.png)
 
 <!-- 
 (*) 以下の PowerShell スクリプトを「実行コマンド」から実行するとすべてインストールされる
