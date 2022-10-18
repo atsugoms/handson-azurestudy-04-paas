@@ -133,16 +133,20 @@
 
 ## リポジトリのクローン
 
-1. 以下のリポジトリを `C:\work` 以下にクローンしておく
+以下のリポジトリを `C:\work` 以下にクローンします。
 
-    ```
-    https://github.com/Azure-Samples/msdocs-app-service-sqldb-dotnetcore.git
-    ```
+```
+https://github.com/Azure-Samples/msdocs-app-service-sqldb-dotnetcore.git
+```
 
-    (*) Git Bash を利用
+1. `C:\work` フォルダを作成
 
-        mkdir -p ${HOMEDRIVE}/work
-        cd ${HOMEDRIVE}/work
+1. 作成したフォルダで右クリック→[Git Bash here]を選択
+
+    ![](images/prep01-0201-gitclone.png)
+
+1. 以下のコマンドを実行
+
         git clone https://github.com/Azure-Samples/msdocs-app-service-sqldb-dotnetcore.git
-        cd msdocs-app-service-sqldb-dotnetcore
 
+    ![](images/prep01-0202-gitclone.png)
