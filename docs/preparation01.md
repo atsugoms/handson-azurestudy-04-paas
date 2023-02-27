@@ -91,7 +91,7 @@
 
         ダウンロードするインストーラー
 
-          * `SDK 6.0.402 Windows x64`
+          * `64-bit Git for Windows Setup`
 
             ![](images/prep01-0105-network.png)
 
@@ -102,7 +102,7 @@
 
         ダウンロードするインストーラー
 
-          * `64-bit Git for Windows Setup`
+          * `SDK 6.0.x Windows x64 (x: 最新を選択)`
 
             ![](images/prep01-0106-network.png)
 
