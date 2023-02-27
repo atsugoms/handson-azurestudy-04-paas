@@ -20,13 +20,21 @@
 
     [ARMテンプレート JSON ファイル](https://raw.githubusercontent.com/akinaritsugo/handson-azurestudy-04-paas/main/infra/template.json)
 
-    テンプレート設定のポイント
+    テンプレート設定
 
-    * サブスクリプション： (ハンズオンで利用するもの)
-    * リソースグループ： (任意。同一サブスクリプション共用する場合、重複しないよう注意)
-    * リージョン： `Japan East`
-    * Virtual Machine Admin Username： (任意。VMのログインID)
-    * Virtual Machine Admin Password： (任意。VMのログインパスワード)
+    |項目|設定値|設定例|
+    |---|---|---|
+    |サブスクリプション| AzureStudy用に準備したもの | - |
+    |リソースグループ| 任意名 | `rg-{YOUR_NAME}` |
+    |リージョン| 展開するリージョン | `japan east` |
+    |Virtual Network Name| 仮想ネットワーク名 | `vnet-{YOUR_NAME}-main` |
+    |NSG VM NAme| 仮想マシンを展開するサブネット( `snet-vm` )に取り付けるNSG名 | `nsg-{YOUR_NAME}-vm` |
+    |NSG AppSvc Name| AppliactionGatewayを展開するサブネット（ `snet-gateway` ）に取り付けるNSG名 | `nsg-{YOUR_NAME}-appsvc` |
+    |NSG Db Name| Private Peering を展開するサブネット（ `snet-peering` ）に取り付けるNSG名 | `nsg-{YOUR_NAME}-db` |
+    |Virtual Machine Name| 仮想マシン名 | `vm-{YOUR_NAME}-winsvr` |
+    |Virtual Machine Admin Username| 仮想マシンのログインユーザー名 | `azureuser` |
+    |Virtual Machine Admin Password| 仮想マシンのログインパスワード| - |
+
 
 
 ## Windows Server の設定
