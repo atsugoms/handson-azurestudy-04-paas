@@ -16,6 +16,10 @@
 
    [![Deploy to Azure](https://aka.ms/deploytoazurebutton)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Fakinaritsugo%2Fhandson-azurestudy-04-paas%2Fmain%2Finfra%2Ftemplate.json)
 
+    (*) "Deploy ボタン" からうまく飛べない場合、 以下のJSONファイルをダウンロードして「カスタムテンプレートのデプロイ」に読み込ませる
+
+    [ARMテンプレート JSON ファイル](https://raw.githubusercontent.com/akinaritsugo/handson-azurestudy-04-paas/main/infra/template.json)
+
     テンプレート設定のポイント
 
     * サブスクリプション： (ハンズオンで利用するもの)
