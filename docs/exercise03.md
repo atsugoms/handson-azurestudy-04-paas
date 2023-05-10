@@ -61,6 +61,28 @@
 
     ![](images/ex03-0103-schema.png)
 
+(*) テーブル作成は以下のコマンドでも作成可能
+
+```
+IF OBJECT_ID(N'__EFMigrationsHistory', N'U') IS NOT NULL
+    DROP TABLE __EFMigrationsHistory;
+
+IF OBJECT_ID(N'Todo', N'U') IS NOT NULL
+    DROP TABLE Todo;
+
+CREATE TABLE [__EFMigrationsHistory] (
+    [MigrationId] nvarchar(150) NOT NULL,
+    [ProductVersion] nvarchar(32) NOT NULL,
+    CONSTRAINT [PK___EFMigrationsHistory] PRIMARY KEY ([MigrationId])
+);
+
+CREATE TABLE [Todo] (
+    [ID] int NOT NULL IDENTITY,
+    [Description] nvarchar(max) NULL,
+    [CreatedDate] datetime2 NOT NULL,
+    CONSTRAINT [PK_Todo] PRIMARY KEY ([ID])
+);
+```
 
 ## SQL Database のスキーマ確認
 
