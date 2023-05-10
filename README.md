@@ -30,3 +30,8 @@
 1. [ハンズオン](/docs/README.md)
 
 
+## 参考
+
+本ハンズオンは以下の公式ドキュメントをベースに作成しています。
+
+https://docs.microsoft.com/ja-jp/azure/app-service/tutorial-dotnetcore-sqldb-app
