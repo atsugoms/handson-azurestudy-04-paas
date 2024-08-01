@@ -52,14 +52,17 @@
 
 1. PowerShell を起動、以下のコマンドを実行
 
-        cd .\DotNetCoreSqlDb\
-        dotnet tool install -g dotnet-ef
-        dotnet ef migrations add InitialCreate
-        dotnet ef database update
+    ```
+    dotnet tool install -g dotnet-ef
+    dotnet ef migrations add InitialCreate
+    dotnet ef database update
+    ```
 
     実行結果イメージ
 
     ![](images/ex03-0103-schema.png)
+
+(*) Visual Studio Code の統合ターミナルでうまく動作しない場合、PowerShellを管理者起動して実行を試す
 
 (*) テーブル作成は以下のコマンドでも作成可能
 

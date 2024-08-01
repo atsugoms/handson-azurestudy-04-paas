@@ -22,7 +22,7 @@
 
 1. `Index.cshtml` のタイトルなどを任意に修正
 
-    `/DotNetCoreSqlDb/Views/Todos/Index.cshtml`
+    `/Views/Todos/Index.cshtml`
 
     修正前
 
