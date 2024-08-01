@@ -96,13 +96,13 @@
             ![](images/prep01-0105-network.png)
 
 
-    1. .NET 6 SDK インストール
+    1. .NET 8 SDK インストール
 
-        https://dotnet.microsoft.com/en-us/download/dotnet/6.0
+        https://dotnet.microsoft.com/en-us/download/dotnet/8.0
 
         ダウンロードするインストーラー
 
-          * `SDK 6.0.x Windows x64 (x: 最新を選択)`
+          * `SDK 8.0.x Windows x64 (x: 最新を選択)`
 
             ![](images/prep01-0106-network.png)
 
