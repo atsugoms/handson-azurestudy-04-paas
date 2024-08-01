@@ -57,7 +57,7 @@
 
     * Visual Studio Code および 拡張機能
     * Git
-    * .Net 6.0 SDK
+    * .Net 8.0 SDK
     * SQL Server Management Studio (任意)
 
     インストーラーは以下の通り
