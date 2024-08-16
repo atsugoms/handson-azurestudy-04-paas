@@ -36,7 +36,7 @@
 
 1. 接続文字列を修正
 
-    1. `/DotNetCoreSqlDb/appsettings.json` を開く
+    1. `/appsettings.json` を開く
 
     1. `ConnectionsStrings.MyDbConnection` の値をあらかじめ取得しておいた接続文字列で書き換え
 
@@ -48,9 +48,7 @@
 
 1. RDP で開発用仮想マシンへ接続
 
-1. 開発フォルダ移動、Visual Studio Code で開く
-
-1. PowerShell を起動、以下のコマンドを実行
+1. PowerShell を管理者で起動、プロジェクトディレクトリに移動して、以下のコマンドを実行
 
     ```
     dotnet tool install -g dotnet-ef
