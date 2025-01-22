@@ -1,9 +1,12 @@
 # Exercise3: SQL Database のスキーマ生成
 
-## 【目次】
-
 ![](images/ex03-0000-schema.png)
 
+### ⏳ 推定時間
+
+- 5 ~ 10分
+
+### 🗒️ 目次
 
 1. [SQL Database への接続文字列取得](#sql-database-への接続文字列取得)
 1. [SQL Database への接続設定](#sql-database-への接続設定)
@@ -43,7 +46,7 @@
         ![](images/ex03-0102-schema.png)
 
 ## SQL Database の初期化
-
+<!-- 
 (*) 仮想マシンの中で実施
 
 1. RDP で開発用仮想マシンへ接続
@@ -51,7 +54,7 @@
 1. PowerShell を管理者で起動、プロジェクトディレクトリに移動して、以下のコマンドを実行
 
     ```
-    dotnet tool install -g dotnet-ef
+    dotnet tool install -g dotnet-ef --version 8.*
     dotnet ef migrations add InitialCreate
     dotnet ef database update
     ```
@@ -61,29 +64,42 @@
     ![](images/ex03-0103-schema.png)
 
 (*) Visual Studio Code の統合ターミナルでうまく動作しない場合、PowerShellを管理者起動して実行を試す
+-->
 
-(*) テーブル作成は以下のコマンドでも作成可能
+(*) Azure ポータルで実施
 
-```
-IF OBJECT_ID(N'__EFMigrationsHistory', N'U') IS NOT NULL
-    DROP TABLE __EFMigrationsHistory;
+1. Azure ポータルへ入って作成済みの SQL Database を開く
 
-IF OBJECT_ID(N'Todo', N'U') IS NOT NULL
-    DROP TABLE Todo;
+1. [クエリエディター] を開く
 
-CREATE TABLE [__EFMigrationsHistory] (
-    [MigrationId] nvarchar(150) NOT NULL,
-    [ProductVersion] nvarchar(32) NOT NULL,
-    CONSTRAINT [PK___EFMigrationsHistory] PRIMARY KEY ([MigrationId])
-);
+1. 「SQL Server 認証」 を使ってログイン
 
-CREATE TABLE [Todo] (
-    [ID] int NOT NULL IDENTITY,
-    [Description] nvarchar(max) NULL,
-    [CreatedDate] datetime2 NOT NULL,
-    CONSTRAINT [PK_Todo] PRIMARY KEY ([ID])
-);
-```
+    ![](images/ex03-0401-schema.png)
+
+1. 以下のクエリを実行
+
+    ```
+    IF OBJECT_ID(N'__EFMigrationsHistory', N'U') IS NOT NULL
+        DROP TABLE __EFMigrationsHistory;
+
+    IF OBJECT_ID(N'Todo', N'U') IS NOT NULL
+        DROP TABLE Todo;
+
+    CREATE TABLE [__EFMigrationsHistory] (
+        [MigrationId] nvarchar(150) NOT NULL,
+        [ProductVersion] nvarchar(32) NOT NULL,
+        CONSTRAINT [PK___EFMigrationsHistory] PRIMARY KEY ([MigrationId])
+    );
+
+    CREATE TABLE [Todo] (
+        [ID] int NOT NULL IDENTITY,
+        [Description] nvarchar(max) NULL,
+        [CreatedDate] datetime2 NOT NULL,
+        CONSTRAINT [PK_Todo] PRIMARY KEY ([ID])
+    );
+    ```
+
+    ![](images/ex03-0403-schema.png)
 
 ## SQL Database のスキーマ確認
 

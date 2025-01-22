@@ -1,8 +1,12 @@
 # Exercise1: AppService作成
 
-## 【目次】
-
 ![](images/ex01-0000-appsvc.png)
+
+### ⏳ 推定時間
+
+- 10 ~ 15分
+
+### 🗒️ 目次
 
 1. [App Service の作成](#app-service-の作成)
 1. [App Service の動作確認](#app-service-の動作確認)
